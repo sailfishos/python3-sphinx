@@ -1,14 +1,7 @@
-# Adapted from Fedora's packaging (2014-02-17)
-# http://pkgs.fedoraproject.org/cgit/python-sphinx.git/tree/python-sphinx.spec
-
-%global upstream_name Sphinx
-
 Name:       python-sphinx
 Version:    1.1.3
 Release:    8
 Summary:    Python documentation generator
-
-Group:      Development/Tools
 
 # Unless otherwise noted, the license for code is BSD
 # sphinx/util/stemmer.py Public Domain
@@ -16,7 +9,6 @@ Group:      Development/Tools
 # jquery (MIT or GPLv2)
 License:    BSD and Public Domain and Python and (MIT or GPLv2)
 URL:        http://sphinx.pocoo.org/
-# Source  http://pypi.python.org/packages/source/S/%{upstream_name}/%{upstream_name}-%{version}.tar.gz
 Source0:    %{name}-%{version}.tar.gz
 
 BuildArch:     noarch
