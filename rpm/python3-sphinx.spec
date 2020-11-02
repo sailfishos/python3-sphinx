@@ -1,4 +1,4 @@
-Name:       python-sphinx
+Name:       python3-sphinx
 Version:    1.1.3
 Release:    8
 Summary:    Python documentation generator
@@ -12,14 +12,14 @@ URL:        http://sphinx.pocoo.org/
 Source0:    %{name}-%{version}.tar.gz
 
 BuildArch:     noarch
-BuildRequires: python2-devel >= 2.4
-BuildRequires: python-setuptools
-BuildRequires: python-docutils
-BuildRequires: python-jinja2
+BuildRequires: python3-devel >= 2.4
+BuildRequires: python3-setuptools
+BuildRequires: python3-docutils
+BuildRequires: python3-jinja2
 
-Requires:      python-docutils
-Requires:      python-jinja2
-Requires:      python-pygments
+Requires:      python3-docutils
+Requires:      python3-jinja2
+Requires:      python3-pygments
 
 %description
 Sphinx is a tool that makes it easy to create intelligent and
@@ -50,23 +50,22 @@ the Python docs:
       snippets and inclusion of appropriately formatted docstrings.
 
 %prep
-%setup -q -n %{name}-%{version}/%{name}
+%autosetup -n %{name}-%{version}/python-sphinx
 sed '1d' -i sphinx/pycode/pgen2/token.py
 
 %build
-%{__python} setup.py build
+%py3_build
 
 %install
-rm -rf %{buildroot}
-
-%{__python} setup.py install --skip-build --root %{buildroot}
+%py3_install
 
 # Move language files to /usr/share;
 # patch to support this incorporated in 0.6.6
-pushd %{buildroot}%{python_sitelib}
+pushd %{buildroot}%{python3_sitelib}
 
-for lang in `find sphinx/locale -maxdepth 1 -mindepth 1 -type d -printf "%f "`;
+for lang in `find sphinx/locale -maxdepth 1 -mindepth 1 -type d -not -path '*/\.*' -printf "%f "`;
 do
+  test $lang == __pycache__ && continue
   install -d %{buildroot}%{_datadir}/sphinx/locale/$lang
   install -d %{buildroot}%{_datadir}/locale/$lang/LC_MESSAGES
   mv sphinx/locale/$lang/LC_MESSAGES/sphinx.js \
@@ -86,8 +85,9 @@ popd
 
 %files -f sphinx.lang
 %defattr(-,root,root,-)
+%license LICENSE
 %{_bindir}/sphinx-*
-%{python_sitelib}/*
+%{python3_sitelib}/*
 %dir %{_datadir}/sphinx/
 %dir %{_datadir}/sphinx/locale
 %dir %{_datadir}/sphinx/locale/*
