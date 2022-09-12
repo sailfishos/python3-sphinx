@@ -1,5 +1,5 @@
 Name:       python3-sphinx
-Version:    1.1.3
+Version:    1.3.5
 Release:    8
 Summary:    Python documentation generator
 
@@ -8,8 +8,10 @@ Summary:    Python documentation generator
 # sphinx/pycode/pgen2 Python
 # jquery (MIT or GPLv2)
 License:    BSD and Public Domain and Python and (MIT or GPLv2)
-URL:        http://sphinx.pocoo.org/
+URL:        http://github.com/sailfishos/python3-sphinx
 Source0:    %{name}-%{version}.tar.gz
+Patch0:     0001-Current-docutils-no-longer-have.patch
+Patch1:     0002-Ignore-dependencies-which-we-don-t-need.patch
 
 BuildArch:     noarch
 BuildRequires: python3-devel >= 2.4
@@ -50,7 +52,7 @@ the Python docs:
       snippets and inclusion of appropriately formatted docstrings.
 
 %prep
-%autosetup -n %{name}-%{version}/python-sphinx
+%autosetup -p1 -n %{name}-%{version}/python-sphinx
 sed '1d' -i sphinx/pycode/pgen2/token.py
 
 %build

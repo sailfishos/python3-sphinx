@@ -1,0 +1,33 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ville Nummela <ville.nummela@jolla.com>
+Date: Mon, 12 Sep 2022 10:40:51 +0300
+Subject: [PATCH] Current docutils no longer have
+ docutils.parsers.rst.directives.html.MetaBody.meta. Since we don't utilize
+ additional meta tags, we can just ignore this.
+
+---
+ sphinx/environment.py | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/sphinx/environment.py b/sphinx/environment.py
+index 8d0789cfa6566bfdce4d300c053dc913c0151165..40d2a38f713b3ff7d56ffeb46e349a366e221840 100644
+--- a/sphinx/environment.py
++++ b/sphinx/environment.py
+@@ -32,7 +32,6 @@ from docutils.utils import Reporter, relative_path, get_source_line
+ from docutils.readers import standalone
+ from docutils.parsers.rst import roles, directives
+ from docutils.parsers.rst.languages import en as english
+-from docutils.parsers.rst.directives.html import MetaBody
+ from docutils.writers import UnfilteredWriter
+ from docutils.frontend import OptionParser
+ 
+@@ -843,9 +842,6 @@ class BuildEnvironment:
+         doctree.settings.warning_stream = None
+         doctree.settings.env = None
+         doctree.settings.record_dependencies = None
+-        for metanode in doctree.traverse(MetaBody.meta):
+-            # docutils' meta nodes aren't picklable because the class is nested
+-            metanode.__class__ = addnodes.meta
+ 
+         # cleanup
+         self.temp_data.clear()
