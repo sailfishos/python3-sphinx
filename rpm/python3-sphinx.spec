@@ -63,7 +63,7 @@ sed '1d' -i sphinx/pycode/pgen2/token.py
 # patch to support this incorporated in 0.6.6
 pushd %{buildroot}%{python3_sitelib}
 
-for lang in `find sphinx/locale -maxdepth 1 -mindepth 1 -type d -not -path '*/\.*' -printf "%f "`;
+for lang in $(find sphinx/locale -maxdepth 1 -mindepth 1 -type d -not -path '*/\.*' -exec basename "{}" ";" | tr "\n" " ");
 do
   test $lang == __pycache__ && continue
   install -d %{buildroot}%{_datadir}/sphinx/locale/$lang
